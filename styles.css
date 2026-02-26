@@ -1,11 +1,18 @@
+@font-face {
+  font-family: 'Derringer';
+  src: url('Derringer-Serial Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* ── Reset & variables ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #0f1117;
-  --surface:   #1a1d27;
-  --accent:    #4f8ef7;
-  --accent2:   #7c3aed;
+  --bg:        #1d2233;
+  --surface:   #272d40;
+  --accent:    #6070b7;
+  --accent2:   #de7d1a;
   --text:      #e2e8f0;
   --muted:     #8892a4;
   --radius:    8px;
@@ -15,7 +22,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Derringer', serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
@@ -88,20 +95,23 @@ h2::after {
 
 /* ── Hero ──────────────────────────────────────────────────────────────── */
 #hero {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: radial-gradient(ellipse at 50% 60%, rgba(79,142,247,0.12) 0%, transparent 70%);
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/cathedral.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   padding-top: 60px;
 }
 
 .hero-content { max-width: 640px; padding: 0 1.5rem; }
 
 #hero-name {
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  font-weight: 800;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 600;
   letter-spacing: -1px;
   background: linear-gradient(135deg, var(--text) 30%, var(--accent));
   -webkit-background-clip: text;
@@ -112,7 +122,7 @@ h2::after {
 #hero-tagline {
   margin: 1rem 0 2rem;
   font-size: 1.2rem;
-  color: var(--muted);
+  color: var(--text);
 }
 
 /* ── Button ────────────────────────────────────────────────────────────── */
@@ -136,46 +146,72 @@ h2::after {
 
 /* ── Projects ──────────────────────────────────────────────────────────── */
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin: 0;
 }
 
 .card {
-  background: var(--surface);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  transition: transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  min-height: 60vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(79,142,247,0.15);
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
 }
 
-.card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-
-.card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 1rem; }
-
-.card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
-
-.tag {
-  font-size: 0.75rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(79,142,247,0.15);
-  color: var(--accent);
+.card-text-image {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  height: auto;
+  margin-bottom: 2rem;
 }
 
-.card-link {
-  font-size: 0.9rem;
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 500;
+.card-content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
 }
 
-.card-link:hover { text-decoration: underline; }
+.card p { 
+  color: #ffffff; 
+  font-size: 1.3rem; 
+  line-height: 1.8;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .card {
+    min-height: 50vh;
+    padding: 3rem 1.5rem;
+  }
+  
+  .card-text-image {
+    max-width: 90%;
+  }
+  
+  .card p {
+    font-size: 1.1rem;
+  }
+}
 
 /* ── Skills ────────────────────────────────────────────────────────────── */
 #skills { background: var(--surface); }
