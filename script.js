@@ -58,7 +58,7 @@ const DATA = {
     {
       title: "Forward Hall",
       description: "An upcomming FPS Rougelite with unique gameplay mechanics and an interesting art style",
-      backgroundImage: "images/watergif.gif",
+      backgroundImage: "videos/teaser2.mp4",
       textImage: "images/forwardhall_text.png",
     },
   ],
@@ -83,7 +83,7 @@ function initParallax() {
     layerDiv.style.backgroundImage = `url('${layer.image}')`;
     layerDiv.style.opacity = layer.opacity;
     layerDiv.style.zIndex = index + 1;
-    layerDiv.style.transform = `translate3d(${-200}px, 0, 0) scale(${parallaxScaleFactor})`;
+    layerDiv.style.transform = `translate3d(${-screen.width/6}px, 0, 0) scale(${parallaxScaleFactor})`;
     // Insert before hero content
     heroSection.insertBefore(layerDiv, heroContent);
   });
@@ -100,7 +100,31 @@ const grid = document.getElementById("projects-grid");
 DATA.projects.forEach(({ title, description, backgroundImage, textImage }) => {
   const card = document.createElement("article");
   card.className = "card";
-  card.style.backgroundImage = `url('${backgroundImage}')`;
+  
+  // Check if background is a video file
+  const isVideo = /\.(mp4|webm|ogg)$/i.test(backgroundImage);
+  
+  if (isVideo) {
+    // Create video background
+    const video = document.createElement("video");
+    video.src = backgroundImage;
+    video.autoplay = true;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.style.position = "absolute";
+    video.style.top = "0";
+    video.style.left = "0";
+    video.style.width = "100%";
+    video.style.height = "100%";
+    video.style.objectFit = "cover";
+    video.style.zIndex = "0";
+    card.appendChild(video);
+    card.style.position = "relative";
+  } else {
+    // Use image background
+    card.style.backgroundImage = `url('${backgroundImage}')`;
+  }
 
   const textImageElement = document.createElement("img");
   textImageElement.src = textImage;
@@ -137,7 +161,7 @@ function updateParallax() {
     parallaxLayers.forEach(layer => {
       const speed = layer.dataset.speed;
       const yPos = -(scrolled * speed);
-      layer.style.transform = `translate3d(${-200}px, ${yPos}px, 0) scale(${parallaxScaleFactor})`;
+      layer.style.transform = `translate3d(${-screen.width/6}px, ${yPos}px, 0) scale(${parallaxScaleFactor})`;
     });
   }
 }
