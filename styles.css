@@ -9,7 +9,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #292d3a;
+  --bg:        #0c0f1b;
   --surface:   #272d40;
   --accent:    #ff8dea;
   --accent2:   #80e283;
@@ -33,7 +33,7 @@ body {
 
 section { padding: 5rem 0; }
 
-#projects { padding-top: 2rem; padding-bottom: 0; }
+#projects { padding-top: 0rem; padding-bottom: 0; }
 
 h2 {
   font-size: 2rem;
@@ -159,8 +159,13 @@ h2::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10rem 2rem;
+  padding: 10rem 0rem;
   text-align: center;
+}
+
+.card-video {
+  --blur-amount: 0px;
+  filter: blur(var(--blur-amount));
 }
 
 .card::before {
@@ -176,7 +181,7 @@ h2::after {
 .card-text-image {
   position: relative;
   z-index: 2;
-  max-width: 600px;
+  max-width: 750px;
   height: auto;
   margin-bottom: 2rem;
 }
@@ -185,6 +190,26 @@ h2::after {
   position: relative;
   z-index: 2;
   max-width: 680px;
+}
+
+.card-button {
+  display: inline-block;
+  background: linear-gradient(0deg, #291667, #514283);
+  color: white;
+  padding: 15px 45px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 1.5rem;
+  transition: var(--transition);
+  text-shadow: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  filter: brightness(1.1);
 }
 
 .card p { 
@@ -202,6 +227,21 @@ h2::after {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   align-items: center;
   text-align: center;
+  
+}
+#contact h1::after {
+  content: ''; /* Required for pseudo-elements */
+  position: absolute;
+  width: 50%; /* Makes the bar the same width as the text */
+  height: 3px; /* Set the thickness of your bar */
+  border-radius: 5px;
+  background-color: var(--accent); /* Set the color of your bar */
+  /*bottom: 0;  Position the bar at the bottom of the container */
+  left: 25%;
+}
+#contact p {
+  padding-left: 30%;
+  text-align: left;
 }
 #contact a {
   color: var(--accent); 

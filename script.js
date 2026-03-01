@@ -57,7 +57,8 @@ const DATA = {
   projects: [
     {
       title: "Forward Hall",
-      description: "An upcomming FPS Rougelite with unique gameplay mechanics and an interesting art style",
+      buttonText: "Learn More",
+      buttonLink: "https://www.youtube.com/@Elliptical521",
       backgroundImage: "videos/teaser2.mp4",
       textImage: "images/forwardhall_text.png",
     },
@@ -81,9 +82,12 @@ function initParallax() {
     layerDiv.className = 'parallax-layer';
     layerDiv.dataset.speed = layer.speed;
     layerDiv.style.backgroundImage = `url('${layer.image}')`;
+    layerDiv.style.backgroundPosition = 'center center';
+    layerDiv.style.left = '-10%';
+    layerDiv.style.top = '0%';
     layerDiv.style.opacity = layer.opacity;
     layerDiv.style.zIndex = index + 1;
-    layerDiv.style.transform = `translate3d(${-screen.width/6}px, 0, 0) scale(${parallaxScaleFactor})`;
+    layerDiv.style.transform = `scale(${parallaxScaleFactor})`;
     // Insert before hero content
     heroSection.insertBefore(layerDiv, heroContent);
   });
@@ -97,7 +101,7 @@ document.title = `${DATA.name} — Portfolio`;
 
 // Projects
 const grid = document.getElementById("projects-grid");
-DATA.projects.forEach(({ title, description, backgroundImage, textImage }) => {
+DATA.projects.forEach(({ title, buttonText, buttonLink, backgroundImage, textImage }) => {
   const card = document.createElement("article");
   card.className = "card";
   
@@ -105,8 +109,11 @@ DATA.projects.forEach(({ title, description, backgroundImage, textImage }) => {
   const isVideo = /\.(mp4|webm|ogg)$/i.test(backgroundImage);
   
   if (isVideo) {
+    
     // Create video background
     const video = document.createElement("video");
+    video.className = "card-video";
+    document.documentElement.style.setProperty('--blur-amount', window.pageYOffset);
     video.src = backgroundImage;
     video.autoplay = true;
     video.muted = true;
@@ -118,6 +125,7 @@ DATA.projects.forEach(({ title, description, backgroundImage, textImage }) => {
     video.style.width = "100%";
     video.style.height = "100%";
     video.style.objectFit = "cover";
+    video.style.transform = "scale(1)";
     video.style.zIndex = "0";
     card.appendChild(video);
     card.style.position = "relative";
@@ -134,13 +142,39 @@ DATA.projects.forEach(({ title, description, backgroundImage, textImage }) => {
   const content = document.createElement("div");
   content.className = "card-content";
 
-  const p = document.createElement("p");
-  p.textContent = description;
+  const button = document.createElement("a");
+  button.href = buttonLink;
+  button.target = "_blank";
+  button.rel = "noopener noreferrer";
+  button.textContent = buttonText;
+  button.className = "card-button";
 
-  content.appendChild(p);
+  content.appendChild(button);
   card.append(textImageElement, content);
   grid.appendChild(card);
 });
+
+function updateVideos() {
+  // Get all project cards
+  const cards = document.querySelectorAll('.card');
+  
+  cards.forEach(card => {
+    // Find video element within this card
+    const video = card.querySelector('video');
+    
+    if (video) {
+      // Update video properties here
+      // Example: Apply blur based on scroll position
+      const blurAmount = (10-(window.pageYOffset / 90));
+      const blurClamped = Math.max(2, Math.min(blurAmount, 30)); // Clamps blurAmount 3-30
+      video.style.filter = `blur(${blurClamped}px)`;
+      
+      // Or update scale, opacity, etc.
+      // video.style.opacity = Math.max(1 - window.pageYOffset / 1000, 0.3);
+      // video.style.transform = `scale(${0.7 - window.pageYOffset / 10000})`;
+    }
+  });
+}
 
 // Footer year
 document.getElementById("year").textContent = new Date().getFullYear();
@@ -161,7 +195,7 @@ function updateParallax() {
     parallaxLayers.forEach(layer => {
       const speed = layer.dataset.speed;
       const yPos = -(scrolled * speed);
-      layer.style.transform = `translate3d(${-screen.width/6}px, ${yPos}px, 0) scale(${parallaxScaleFactor})`;
+      layer.style.transform = `translateY(${yPos}px) scale(${parallaxScaleFactor})`;
     });
   }
 }
@@ -171,6 +205,7 @@ let ticking = false;
 function requestParallaxUpdate() {
   if (!ticking) {
     requestAnimationFrame(updateParallax);
+    requestAnimationFrame(updateVideos);
     ticking = true;
     setTimeout(() => { ticking = false; }, 10);
   }
