@@ -9,10 +9,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #1d2233;
+  --bg:        #292d3a;
   --surface:   #272d40;
-  --accent:    #6070b7;
-  --accent2:   #de7d1a;
+  --accent:    #ff8dea;
+  --accent2:   #80e283;
   --text:      #e2e8f0;
   --muted:     #8892a4;
   --radius:    8px;
@@ -204,7 +204,7 @@ h2::after {
   text-align: center;
 }
 #contact a {
-  color: #ffffff; 
+  color: var(--accent); 
   font-size: 1.3rem; 
   line-height: 1.8;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
