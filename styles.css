@@ -194,7 +194,7 @@ h2::after {
 
 .card-button {
   display: inline-block;
-  background: linear-gradient(0deg, #291667, #514283);
+  background: var(--accent);
   color: white;
   padding: 15px 45px;
   border-radius: var(--radius);

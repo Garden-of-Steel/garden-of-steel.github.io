@@ -154,28 +154,6 @@ DATA.projects.forEach(({ title, buttonText, buttonLink, backgroundImage, textIma
   grid.appendChild(card);
 });
 
-function updateVideos() {
-  // Get all project cards
-  const cards = document.querySelectorAll('.card');
-  
-  cards.forEach(card => {
-    // Find video element within this card
-    const video = card.querySelector('video');
-    
-    if (video) {
-      // Update video properties here
-      // Example: Apply blur based on scroll position
-      const blurAmount = (10-(window.pageYOffset / 90));
-      const blurClamped = Math.max(2, Math.min(blurAmount, 30)); // Clamps blurAmount 3-30
-      video.style.filter = `blur(${blurClamped}px)`;
-      
-      // Or update scale, opacity, etc.
-      // video.style.opacity = Math.max(1 - window.pageYOffset / 1000, 0.3);
-      // video.style.transform = `scale(${0.7 - window.pageYOffset / 10000})`;
-    }
-  });
-}
-
 // Footer year
 document.getElementById("year").textContent = new Date().getFullYear();
 
